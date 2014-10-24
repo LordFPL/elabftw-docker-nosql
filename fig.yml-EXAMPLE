@@ -1,0 +1,25 @@
+web:
+    #build: .
+    image: nicolascarpi/elabftw-docker-nosql
+    environment:
+        - DB_NAME=elabftw
+        - DB_USER=elabftw
+        - DB_PASSWORD=<YOUR PASSWORD>
+        - SERVICE_NAME=elabftw
+    ports: 
+        - "443:443"
+    links:
+        - mysql
+    volumes:
+        - /docker-files/uploads:/elabftw/uploads
+        - /srv/docker/files:/etc/nginx/certs
+        - /srv/docker/files/logs:/var/log/nginx
+mysql:
+    image: mysql
+    environment: 
+        - MYSQL_ROOT_PASSWORD=<YOUR PASSWORD>
+        - MYSQL_DATABASE=elabftw
+        - MYSQL_USER=elabftw
+        - MYSQL_PASSWORD=<YOUR PASSWORD>
+    volumes:
+        - /opt/mysql/data:/var/lib/mysql
