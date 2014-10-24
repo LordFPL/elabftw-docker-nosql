@@ -1,13 +1,14 @@
 # elabftw in docker, without sql
 FROM dockerfile/ubuntu
+MAINTAINER Nicolas CARPi <nicolas.carpi@curie.fr>
 
-# fix proxy in Curie
+# uncomment for dev build in behind curie proxy
 #ADD ./50proxy /etc/apt/apt.conf.d/50proxy
 #ENV http_proxy http://www-cache.curie.fr:3128
 #ENV https_proxy https://www-cache.curie.fr:3128
 
-# Install Nginx.
-#RUN add-apt-repository -y ppa:nginx/stable
+# install nginx and php-fpm
+
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     nginx \
@@ -52,7 +53,7 @@ RUN chmod 755 /*.sh
 CMD ["/start.sh"]
 
 # Define mountable directories.
-VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/elabftw/uploads", "/elabftw/config.php"]
+VOLUME ["/etc/nginx/certs", "/var/log/nginx", "/elabftw/uploads"]
 
 # only HTTPS
 EXPOSE 443
