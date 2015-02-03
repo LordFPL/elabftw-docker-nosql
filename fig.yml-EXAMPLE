@@ -6,6 +6,7 @@ web:
         - DB_USER=elabftw
         - DB_PASSWORD=<YOUR PASSWORD>
         - SERVICE_NAME=elabftw
+        - SERVER_NAME=elabftw.example.com
     ports: 
         - "443:443"
     links:
@@ -15,7 +16,7 @@ web:
         - /srv/docker/files:/etc/nginx/certs
         - /srv/docker/files/logs:/var/log/nginx
 mysql:
-    image: mysql
+    image: mysql:latest
     environment: 
         - MYSQL_ROOT_PASSWORD=<YOUR PASSWORD>
         - MYSQL_DATABASE=elabftw

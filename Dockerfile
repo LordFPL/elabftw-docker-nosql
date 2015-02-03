@@ -3,9 +3,9 @@ FROM ubuntu:14.04
 MAINTAINER Nicolas CARPi <nicolas.carpi@curie.fr>
 
 # uncomment for dev build in behind curie proxy
-#ADD ./50proxy /etc/apt/apt.conf.d/50proxy
-#ENV http_proxy http://www-cache.curie.fr:3128
-#ENV https_proxy https://www-cache.curie.fr:3128
+ADD ./50proxy /etc/apt/apt.conf.d/50proxy
+ENV http_proxy http://www-cache.curie.fr:3128
+ENV https_proxy https://www-cache.curie.fr:3128
 
 # install nginx and php-fpm
 
@@ -20,14 +20,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     php5-curl \
     curl \
     git \
-    python-setuptools && \
+    supervisor && \
     rm -rf /var/lib/apt/lists/*
 
 # only HTTPS
 EXPOSE 443
-
-# install supervisord
-RUN /usr/bin/easy_install supervisor
 
 # add files
 ADD ./nginx-site.conf /etc/nginx/sites-available/default

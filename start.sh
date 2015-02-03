@@ -8,6 +8,7 @@ db_name=${DB_NAME}
 db_user=${DB_USER}
 db_password=${DB_PASSWORD}
 elab_root='/elabftw/'
+server_name=${SERVER_NAME}
 
 cat << EOF > /elabftw/config.php
 <?php
@@ -22,6 +23,7 @@ EOF
 echo "daemon off;" >> /etc/nginx/nginx.conf
 sed -i -e "s/keepalive_timeout\s*65/keepalive_timeout 2/" /etc/nginx/nginx.conf
 sed -i -e "s/keepalive_timeout 2/keepalive_timeout 2;\n\tclient_max_body_size 100m/" /etc/nginx/nginx.conf
+sed -i -e "s/localhost/$server_name/" /etc/nginx/sites-available/default
 
 # php-fpm config
 sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/php.ini
@@ -37,4 +39,4 @@ chown -R www-data:www-data /elabftw
 chmod -R u+x /elabftw/*
 
 # start all the services
-/usr/local/bin/supervisord -c /etc/supervisord.conf -n
+/usr/bin/supervisord -c /etc/supervisord.conf -n
