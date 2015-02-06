@@ -8,7 +8,7 @@ db_name=${DB_NAME}
 db_user=${DB_USER}
 db_password=${DB_PASSWORD}
 elab_root='/elabftw/'
-server_name=${SERVER_NAME}
+server_name=${SERVER_NAME:-localhost}
 
 cat << EOF > /elabftw/config.php
 <?php
